@@ -12,19 +12,31 @@ function git-slug () {
   fi
 }
 
-function git {
-  if [[ "$1" == "checkout" ]]; then
-    echo 'ERROR: Use "git switch" or "git restore" instead' >&2
-    return 1
-  else
-    command git "$@"
-  fi
-}
-
 function source-if-exists () {
   [ -f "$1" ] && source "$1"
 }
 
 function iterm2_print_user_vars () {
   iterm2_set_user_var gitSlug "$(git-slug)"
+}
+
+function gosrcfind () {
+  grep --color=always -iIRn "$1" "$(go env GOROOT)"
+}
+
+function cwd () {
+  pwd | tr -d '\n' | pbcopy
+}
+
+function op_download_document() {
+  local iinfo=$(op get item --account=my "$1" | jq '{uuid: (.uuid), vuuid: (.vaultUuid)}')
+  op get document --account=my \
+    $(echo $iinfo | jq --raw-output '.uuid') \
+    $(echo $iinfo | jq --raw-output '.vuuid') \
+    > "$2"
+  chmod $3 "$2"
+}
+
+function op_get_password() {
+  echo $(op get item --account=my "$1" | jq --raw-output '.details.password')
 }
