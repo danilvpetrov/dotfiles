@@ -131,6 +131,9 @@ defaults write com.apple.dock showhidden -bool true
 # Set the dock icon size
 defaults write com.apple.dock tilesize -int 64
 
+# Hide recent applications in the Dock
+defaults write com.apple.dock show-recents -bool false
+
 # Speed up Mission Control animations
 defaults write com.apple.dock expose-animation-duration -float 0.1
 
