@@ -38,16 +38,6 @@ fi
 
 sudo spctl --add "$(which op)"
 
-if mas account; then
-    echo "App store sign in detected."
-else
-    op_get_login_password "Apple ID" | tr -d '\n' | pbcopy
-    echo "Sign in to the app store first. Password has been copied to the clipboard."
-    mas open
-    open "x-apple.systempreferences:com.apple.preferences.AppleIDPrefPane"
-    exit 1
-fi
-
 if [[ -z "$GITHUB_USER" ]]; then
     echo -n "GitHub user: "
     read GITHUB_USER
@@ -74,6 +64,19 @@ if [[ -e "$HOME/dotfiles" ]]; then
     echo "Dotfiles shortcut directory already exists."
 else
     ln -s "$DOTFILES_PATH" "$HOME/dotfiles"
+fi
+
+# start using utility functions
+source "$HOME/dotfiles/dotfiles/.functions.zsh"
+
+if mas account; then
+    echo "App store sign in detected."
+else
+    op_get_login_password "Apple ID" | tr -d '\n' | pbcopy
+    echo "Sign in to the app store first. Password has been copied to the clipboard."
+    mas open
+    open "x-apple.systempreferences:com.apple.preferences.AppleIDPrefPane"
+    exit 1
 fi
 
 for FILE in "$HOME/dotfiles/setup/"*-*.bash; do
