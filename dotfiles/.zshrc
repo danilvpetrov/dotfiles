@@ -19,6 +19,13 @@ alias m='make'
 alias less='less -R'
 alias grep='grep --color'
 
+alias top='top -F -o cpu -O vsize'
+alias mc='EDITOR=code mc'
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias iplocal="ipconfig getifaddr en0"
+alias network.connections='lsof -l -i +L -R -V'
+alias network.established='lsof -l -i +L -R -V | grep ESTABLISHED'
+
 if [[ "$(uname)" == "Darwin" ]]; then
     alias ls='ls -lhG'
 else
