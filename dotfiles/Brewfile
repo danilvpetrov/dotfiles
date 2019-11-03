@@ -27,7 +27,7 @@ brew "youtube-dl"
 brew "vault"
 brew "vim"
 brew "wine"
-brew "unbar"
+brew "unrar"
 brew "zsh"
 
 cask "1password-cli"
