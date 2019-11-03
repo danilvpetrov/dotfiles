@@ -1,6 +1,10 @@
-.DS_Store
+*.swp
+*~
 .AppleDouble
+.DS_Store
 .LSOverride
 .Spotlight-V100
 .Trashes
-.nfs.*
+Desktop.ini
+Thumbs.db
+debug.test
