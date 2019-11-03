@@ -38,29 +38,10 @@ fi
 
 sudo spctl --add "$(which op)"
 
-if [ -z "$OP_SESSION_my" ]; then
-    while [ -z "$OP_EMAIL" ]; do
-        echo -n "1Password email address: "
-        read OP_EMAIL
-    done
-
-    while [ -z "$OP_KEY" ]; do
-        echo -n "1Password secret key: "
-        read OP_KEY
-    done
-
-    eval $(op signin my "$OP_EMAIL" "$OP_KEY")
-fi
-
-if [ -z "$OP_SESSION_my" ]; then
-    echo "1Password sign in failed."
-    exit 1
-fi
-
 if mas account; then
     echo "App store sign in detected."
 else
-    op get item --account=my Apple | jq --raw-output '.details.fields[]? | select(.designation == "password") | .value' | tr -d '\n' | pbcopy
+    op_get_login_password "Apple ID" | tr -d '\n' | pbcopy
     echo "Sign in to the app store first. Password has been copied to the clipboard."
     mas open
     open "x-apple.systempreferences:com.apple.preferences.AppleIDPrefPane"
