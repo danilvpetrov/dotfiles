@@ -111,10 +111,10 @@ defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
 defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 
 # Disable the Dock by default
-defaults write com.apple.dock autohide-delay -float 1000
+defaults write com.apple.dock autohide-delay -float 0.1
 
 # Right-oriented Dock
-defaults write com.apple.Dock orientation -string "right"
+defaults write com.apple.Dock orientation -string "bottom"
 
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
@@ -200,8 +200,6 @@ defaults write com.apple.screencapture location -string "$HOME/Screenshots"
 # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
 defaults write com.apple.screencapture type -string "png"
 
-# Mac Media Key Forwarder should prioritize Spotify
-defaults write com.milgra.hsmke user_priority_option -int 2
 
 killall \
   "Address Book" \
