@@ -30,3 +30,12 @@ else
   echo "Installing iTerm shell integration..."
   curl -L https://iterm2.com/shell_integration/zsh -o "$HOME/.iterm2_shell_integration.zsh"
 fi
+
+if [[ -e "$HOME//.vim_runtime/install_awesome_vimrc.sh" ]]; then
+  echo "The Ultimate Vim Configuration already installed."
+else
+  echo "Installing The Ultimate Vim Configuration..."
+  git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
+  sh ~/.vim_runtime/install_awesome_vimrc.sh
+fi
+

@@ -6,14 +6,15 @@ else
   echo "Fetching SSH key from 1Password..."
 
   mkdir -p "$HOME/.ssh"
-  op get item --account=my SSH | jq --raw-output .details.notesPlain \
-    > "$HOME/.ssh/id_rsa"
-  chmod 600 "$HOME/.ssh/id_rsa"
+  op_download_document "id_rsa" "$HOME/.ssh/id_rsa" 0600
 fi
 
 echo "Adding SSH key to keychain..."
 
 ssh-add -K "$HOME/.ssh/id_rsa"
+
+# add github.com to knowns hosts
+ssh-keyscan -H github.com >> "$HOME/.ssh/known_hosts"
 
 echo "Switching dotfiles repo to SSH..."
 
