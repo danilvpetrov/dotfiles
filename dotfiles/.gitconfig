@@ -93,5 +93,3 @@
     required = true
     clean = git-lfs clean %f
 
-[url "ssh://git@github.cwx.io"]
-        insteadOf = https://github.cwx.io
