@@ -5,7 +5,7 @@ set -x
 
 CLOUD_PATH="$HOME/Google Drive"
 
-CLOUD_CONFIG_PATH="$CLOUD_PATH/Backup"
+CLOUD_BACKUP_PATH="$CLOUD_PATH/Backup"
 
 if [[ -h "$HOME/.ssh/config" ]]; then
     echo "SSH config already linked."
@@ -15,11 +15,11 @@ else
     fi
 
     echo "Linking SSH config..."
-    ln -s "$CLOUD_CONFIG_PATH/.ssh/config" "$HOME/.ssh/config"
+    ln -s "$CLOUD_BACKUP_PATH/.ssh/config" "$HOME/.ssh/config"
 fi
 
 VSCODE_USER_CONFIG_PATH="$HOME/Library/Application Support/Code/User"
-CLOUD_VSCODE_USER_CONFIG_PATH="$CLOUD_CONFIG_PATH/VSCode"
+CLOUD_VSCODE_USER_CONFIG_PATH="$CLOUD_BACKUP_PATH/VSCode"
 
 echo "Install VSCode extensions..."
 cat "$CLOUD_VSCODE_USER_CONFIG_PATH/extensions.txt"   | xargs -L 1 echo code --install-extension
@@ -37,3 +37,7 @@ for spath in "$CLOUD_VSCODE_USER_CONFIG_PATH/snippets/"*.json; do
     ln -s "${spath}" "$VSCODE_USER_CONFIG_PATH/snippets/$s"
 done
 
+echo "Running additional scripts..."
+for script in "$CLOUD_BACKUP_PATH/bin/"*.bash; do
+    source "$script"
+done
