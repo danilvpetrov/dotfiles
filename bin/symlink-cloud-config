@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 set -e
+set -x
 
 CLOUD_PATH="$HOME/Google Drive"
 
-CLOUD_CONFIG_PATH="$CLOUD_PATH/Configuration"
+CLOUD_CONFIG_PATH="$CLOUD_PATH/Backup"
 
 if [[ -h "$HOME/.ssh/config" ]]; then
     echo "SSH config already linked."
@@ -14,32 +15,25 @@ else
     fi
 
     echo "Linking SSH config..."
-    ln -s "$CLOUD_CONFIG_PATH/Ssh/config" "$HOME/.ssh/config"
+    ln -s "$CLOUD_CONFIG_PATH/.ssh/config" "$HOME/.ssh/config"
 fi
 
-SUBLIME_CONFIG_PATH="$HOME/Library/Application Support/Sublime Text 3/"
-CLOUD_SUBLIME_CONFIG_PATH="$CLOUD_CONFIG_PATH/Sublime Text 3"
+VSCODE_USER_CONFIG_PATH="$HOME/Library/Application Support/Code/User"
+CLOUD_VSCODE_USER_CONFIG_PATH="$CLOUD_CONFIG_PATH/VSCode"
 
-if [[ -h "$SUBLIME_CONFIG_PATH/Installed Packages" ]]; then
-    echo "Sublime Installed Packages directory already linked."
-else
-    echo "Replacing Sublime Installed Packages directory..."
+echo "Install VSCode extensions..."
+cat "$CLOUD_VSCODE_USER_CONFIG_PATH/extensions.txt"   | xargs -L 1 echo code --install-extension
 
-    if [[ -d "$SUBLIME_CONFIG_PATH/Installed Packages" ]]; then
-        mv "$SUBLIME_CONFIG_PATH/Installed Packages" "$SUBLIME_CONFIG_PATH/Installed Packages.bak"
+echo "Linking VSCode settings..."
+mv "$VSCODE_USER_CONFIG_PATH/settings.json" "$VSCODE_USER_CONFIG_PATH/settings.json.bak"
+ln -s "$CLOUD_VSCODE_USER_CONFIG_PATH/settings.json" "$VSCODE_USER_CONFIG_PATH/settings.json"
+
+echo "Linking VSCode snippets..."
+for spath in "$CLOUD_VSCODE_USER_CONFIG_PATH/snippets/"*.json; do
+    s=$(basename "$spath")
+    if [[ -f "$VSCODE_USER_CONFIG_PATH/snippets/$s" ]]; then
+        mv "$VSCODE_USER_CONFIG_PATH/snippets/$s" "$VSCODE_USER_CONFIG_PATH/snippets/$s.bak"
     fi
+    ln -s "${spath}" "$VSCODE_USER_CONFIG_PATH/snippets/$s"
+done
 
-    ln -s "$CLOUD_SUBLIME_CONFIG_PATH/Installed Packages" "$SUBLIME_CONFIG_PATH/Installed Packages"
-fi
-
-if [[ -h "$SUBLIME_CONFIG_PATH/Packages" ]]; then
-    echo "Sublime Packages directory already linked."
-else
-    echo "Replacing Sublime Packages directory..."
-
-    if [[ -d "$SUBLIME_CONFIG_PATH/Packages" ]]; then
-        mv "$SUBLIME_CONFIG_PATH/Packages" "$SUBLIME_CONFIG_PATH/Packages.bak"
-    fi
-
-    ln -s "$CLOUD_SUBLIME_CONFIG_PATH/Packages" "$SUBLIME_CONFIG_PATH/Packages"
-fi
