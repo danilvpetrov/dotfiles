@@ -13,6 +13,14 @@ echo "Adding SSH key to keychain..."
 
 ssh-add -K "$HOME/.ssh/id_rsa"
 
+# generate public key if it does not exist
+if [ -f "$HOME/.ssh/id_rsa.pub" ]; then
+  echo "SSH public key already exists."
+else
+  ssh-keygen -y -f "$HOME/.ssh/id_rsa" > "$HOME/.ssh/id_rsa.pub"
+  chmod 0644 "$HOME/.ssh/id_rsa.pub"
+fi
+
 # add github.com to knowns hosts
 ssh-keyscan -H github.com >> "$HOME/.ssh/known_hosts"
 
