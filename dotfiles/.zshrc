@@ -1,6 +1,9 @@
 autoload -U bashcompinit && bashcompinit
 
-source "$HOME/.functions.zsh"
+# import all available functions
+for FUNCTIONS in "$HOME/".functions*.zsh; do
+  source "$FUNCTIONS"
+done
 
 source-if-exists "$(brew --prefix)/etc/profile.d/z.sh"
 source-if-exists "$HOME/.zprezto/init.zsh"
@@ -9,8 +12,10 @@ source-if-exists "$HOME/.travis/travis.sh"
 
 eval "$(grit shell-integration)"
 
+# Add all key-chain SSH identities on the login
 ssh-add -A 2>/dev/null
 
+# define aliases
 alias e='code .'
 alias h='hive'
 alias d='docker'
