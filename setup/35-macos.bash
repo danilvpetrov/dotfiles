@@ -39,7 +39,6 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write com.apple.systemuiserver menuExtras -array \
   "/System/Library/CoreServices/Menu Extras/Clock.menu" \
   "/System/Library/CoreServices/Menu Extras/Battery.menu" \
-  "/System/Library/CoreServices/Menu Extras/Airport.menu" \
   "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
   "/System/Library/CoreServices/Menu Extras/Displays.menu"
 
