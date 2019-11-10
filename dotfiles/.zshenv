@@ -7,12 +7,10 @@ fi
 if [[ $SHLVL = 1 ]]; then
   source "$HOME/.zshenv.secure"
 
-  export HOMEBREW_GITHUB_API_TOKEN="$GITHUB_TOKEN"
   # Golang-related environment variables
   export GOPATH="$HOME/go"
   export GOPROXY="direct"
   export GOSUMDB="off"
-
 
   # local bin and GOBIN path
   export PATH="$HOME/bin:$PATH"
