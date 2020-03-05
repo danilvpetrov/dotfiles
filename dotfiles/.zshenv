@@ -15,4 +15,10 @@ if [[ $SHLVL = 1 ]]; then
   # local bin and GOBIN path
   export PATH="$HOME/bin:$PATH"
   export PATH="$GOPATH/bin:$PATH"
+
+  # other paths
+  export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+
+  # export less flags
+  export LESS="--quit-if-one-screen --hilite-search --hilite-unread --ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --chop-long-lines  --window=-4"
 fi
