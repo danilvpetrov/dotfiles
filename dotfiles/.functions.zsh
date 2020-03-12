@@ -84,3 +84,29 @@ function op_get_login_password() {
 
   echo $(op get item --account=my "$1" | jq --raw-output '.details.fields[]? | select(.designation == "password") | .value')
 }
+
+function winkbr() {
+  # see this for reference: https://developer.apple.com/library/archive/technotes/tn2450/_index.html
+  # 1. assign capslock to escape key
+  # 2. swap right control and right alt
+  # 3. swap left gui with left alt
+  hidutil property --set '{"UserKeyMapping":
+    [
+      {"HIDKeyboardModifierMappingSrc":0x700000039,
+        "HIDKeyboardModifierMappingDst":0x700000029},
+      {"HIDKeyboardModifierMappingSrc":0x7000000e6,
+        "HIDKeyboardModifierMappingDst":0x7000000e4},
+      {"HIDKeyboardModifierMappingSrc":0x7000000e4,
+        "HIDKeyboardModifierMappingDst":0x7000000e6},
+      {"HIDKeyboardModifierMappingSrc":0x7000000E2,
+        "HIDKeyboardModifierMappingDst":0x7000000E3},
+         {"HIDKeyboardModifierMappingSrc":0x7000000E3,
+        "HIDKeyboardModifierMappingDst":0x7000000E2}
+    ]
+  }'
+}
+
+function resetkbr() {
+  # reset all user key mappings
+  hidutil property --set '{"UserKeyMapping":[]}'
+}
