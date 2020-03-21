@@ -85,6 +85,12 @@ function op_get_login_password() {
   echo $(op get item --account=my "$1" | jq --raw-output '.details.fields[]? | select(.designation == "password") | .value')
 }
 
+function mkcdir()
+{
+   mkdir -p -- "$1" && cd -P -- "$1"
+}
+
+
 function winkbr() {
   # see this for reference: https://developer.apple.com/library/archive/technotes/tn2450/_index.html
   # 1. assign capslock to escape key
