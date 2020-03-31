@@ -27,7 +27,6 @@ brew "youtube-dl"
 brew "vault"
 brew "vim"
 brew "less"
-brew "wine"
 brew "unrar"
 brew "zsh"
 
