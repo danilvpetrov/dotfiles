@@ -72,7 +72,7 @@ source "$HOME/dotfiles/dotfiles/.functions.zsh"
 if mas account; then
     echo "App store sign in detected."
 else
-    op_get_login_password "Apple ID" | tr -d '\n' | pbcopy
+    op get item "Apple ID" | jq -r '.details.fields[] | select (.designation == "password") | .value' | tr -d '\n' | pbcopy
     echo "Sign in to the app store first. Password has been copied to the clipboard."
     mas open
     open "x-apple.systempreferences:com.apple.preferences.AppleIDPrefPane"

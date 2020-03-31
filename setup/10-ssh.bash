@@ -6,7 +6,8 @@ else
   echo "Fetching SSH key from 1Password..."
 
   mkdir -p "$HOME/.ssh"
-  op_download_document "id_rsa" "$HOME/.ssh/id_rsa" 0600
+  op get document "id_rsa" > "$HOME/.ssh/id_rsa"
+  chmod 0600 "$HOME/.ssh/id_rsa"
 fi
 
 echo "Adding SSH key to keychain..."
