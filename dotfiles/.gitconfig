@@ -2,59 +2,11 @@
     name = Danil Petrov
     email = danilpetrovvi@gmail.com
 
-[github]
-    user = danilvpetrov
-
 [core]
     autocrlf = input
     excludesfile = ~/.gitignore.global
     whitespace = trailing-space,space-before-tab,tabwidth=4
     pager = /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
-	editor = vim
-
-[alias]
-    ; diff ...
-    d = diff
-    dc = diff --cached
-    wd = diff --word-diff
-    wdc = diff --cached --word-diff
-    sd = diff --ignore-all-space
-    sdc = diff --cached --ignore-all-space
-
-    ; log ...
-    l  = log --pretty='%C(dim cyan)%h%C(reset) %C(yellow)|%C(reset) %s%C(cyan)%d%C(reset) %C(dim)by %an %ar' --first-parent -20 ; log
-    lp = log --pretty='%C(dim)%<|(15)%p %C(cyan)%h%C(reset) %C(yellow)|%C(reset) %s%C(cyan)%d%C(reset) %C(dim)by %an %ar' -20 ; log showing parent commits
-    lg = log --pretty='%C(dim cyan)%H%C(reset)%C(cyan)%d%C(reset) %C(dim)by %an %ar%n%s%+b%n' --graph ; log graph
-    lb = !git l $(git merge-base $(basename $(git remote show origin | grep 'HEAD branch:' | cut -d: -f2)) HEAD)..HEAD ; log this branch
-    lm = "!f() { git log --pretty='%C(dim)%<|(15)%p %C(cyan)%h%C(reset) %C(yellow)|%C(reset) %s%C(cyan)%d%C(reset) %C(dim)by %an %ar' --stat \"$1^..$1\"; }; f"; log merge
-
-    ; staging + committing ...
-    s = status -bs
-    c = commit
-    t = tag
-    cm = commit -m
-    ca = commit --amend
-    a = add
-    aa = add -A
-    ap = add -A --patch
-    wip = "!git add -A && git commit -m 'WIP [ci skip]'"
-    unstage = reset HEAD --
-    scrub = "!git checkout . && git clean --force -d"
-    destroy = "!git unstage && git scrub"
-
-    ; push + pull ...
-    p = "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)"
-    pt = push --all --follow-tags
-    u = pull --rebase
-    pr = pull-request
-
-    ; branching ...
-    b = branch
-    m = merge --no-ff
-    ff = merge --ff-only
-    co = checkout
-    cb = checkout -b
-    cc = "!git checkout $(git remote show origin | grep 'HEAD branch:' | cut -d: -f2)" ; checkout default branch
 
 [diff]
     renames = true
@@ -66,13 +18,10 @@
     autocorrect = 10
 
 [tag]
-    forceSignAnnotated = true
-
-[color]
-    ui = auto
+    sort = version:refname
 
 [color "diff"]
-    meta = dim bold
+    meta = dim
     frag = dim
     old = red
     new = green
@@ -82,14 +31,46 @@
     changed = yellow
     untracked = red
 
-[push]
-    default = simple
+[alias]
+    ; diff (w = word, s = ignore space, c = cached)...
+    d = diff
+    dc = diff --cached
+    wd = diff --word-diff
+    wdc = diff --cached --word-diff
+    sd = diff --ignore-all-space
+    sdc = diff --cached --ignore-all-space
 
-[tag]
-    sort = version:refname
+    ; logging ...
+    l  = log --pretty='%C(dim cyan)%h%C(reset) %C(yellow)|%C(reset) %s%C(cyan)%d%C(reset) %C(dim)by %an %ar' --first-parent -20 ; log
+    lp = log --pretty='%C(dim)%<|(15)%p %C(cyan)%h%C(reset) %C(yellow)|%C(reset) %s%C(cyan)%d%C(reset) %C(dim)by %an %ar' -20 ; log showing parent commits
+    lg = log --pretty='%C(dim cyan)%H%C(reset)%C(cyan)%d%C(reset) %C(dim)by %an %ar%n%s%+b%n' --graph ; log graph
+    lb = !git l $(git merge-base $(basename $(git remote show origin | grep 'HEAD branch:' | cut -d: -f2)) HEAD)..HEAD ; log this branch
+    lm = "!f() { git log --pretty='%C(dim)%<|(15)%p %C(cyan)%h%C(reset) %C(yellow)|%C(reset) %s%C(cyan)%d%C(reset) %C(dim)by %an %ar' --stat \"$1^..$1\"; }; f"; log merge
+    lt = !git l ...$(git describe --abbrev=0)~ -n1000 ; log changes since last tag on this branch
 
-[filter "lfs"]
-    smudge = git-lfs smudge %f
-    required = true
-    clean = git-lfs clean %f
+    ; staging + committing ...
+    s = status -bs
+    c = commit
+    t = tag
+    cm = commit -m
+    ca = commit --amend
+    a = add
+    aa = add -A
+    ap = add -A --patch
+    wip = "!git add -A && git commit -m 'WIP [ci skip]'"
+    unstage = restore --staged
+    uncommit = reset HEAD~ --mixed
+    destroy = "!echo 'Destroying all uncomitted changes in 3 seconds...' && sleep 3 && git restore --staged . && git restore --worktree . && git clean --force -d"
 
+    ; push + pull ...
+    p = "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)"
+    pt = push --follow-tags
+    pf = push --force-with-lease
+
+    ; branching ...
+    sw = switch
+    swm = switch master
+    b = branch
+    nb = switch -c
+    m = merge --no-ff
+    ff = merge --ff-only
