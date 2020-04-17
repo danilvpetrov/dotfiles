@@ -21,4 +21,17 @@ if [[ $SHLVL = 1 ]]; then
 
   # export less flags
   export LESS="--quit-if-one-screen --hilite-search --hilite-unread --ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --chop-long-lines  --window=-4"
+
+  # load the custom environment variable files
+  EXTRAENVVARFILES=$(find $HOME \( -type l -o -type f \) -maxdepth 1 -iname ".zshenv.*" \! -iname ".zshenv.secure*")
+  for ENVVARFILE in $EXTRAENVVARFILES; do
+   source "$ENVVARFILE"
+  done
+
+  # load all custom secure environment variable files
+  EXTRAENVVARSECUREFILES=$(find $HOME \( -type l -o -type f \) -maxdepth 1 -iname ".zshenv.secure.*")
+  for ENVVARSECUREFILE in $EXTRAENVVARSECUREFILES; do
+   source "$ENVVARSECUREFILE"
+  done
+
 fi
