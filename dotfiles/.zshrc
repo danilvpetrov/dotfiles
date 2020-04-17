@@ -1,7 +1,11 @@
 autoload -U bashcompinit && bashcompinit
 
-# import all available functions
-for FUNCTIONS in "$HOME/".functions*.zsh; do
+# import the core functions
+source "${HOME}/.functions.zsh"
+
+# import extra functions
+EXTRAFUNCTIONS=$(find "$HOME" \( -type l -o -type f \) -maxdepth 1 -iname ".functions.*.zsh")
+for FUNCTIONS in $EXTRAFUNCTIONS; do
   source "$FUNCTIONS"
 done
 
