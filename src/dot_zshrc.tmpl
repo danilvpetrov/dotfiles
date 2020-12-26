@@ -1,0 +1,51 @@
+autoload -U bashcompinit && bashcompinit
+compinit && bashcompinit
+
+# Undo aliasing of run-help to man, so it can be used to get help on zsh builtins.
+unalias run-help
+autoload run-help
+
+setopt clobber # allow output redirection to clobber existing files
+unsetopt autocd
+unsetopt correct
+ulimit -n 8192 # set shell's open file handle limit
+
+# import the core functions
+source "{{- .chezmoi.homedir }}/.functions.zsh"
+
+# import the private functions
+source-if-exists "{{- .chezmoi.homedir }}/.functions.private.zsh"
+
+source-if-exists "$(brew --prefix)/etc/profile.d/z.sh"
+source-if-exists "{{- .chezmoi.homedir }}/.zprezto/init.zsh"
+source-if-exists "{{- .chezmoi.homedir }}/.iterm2_shell_integration.zsh"
+
+eval "$(grit shell-integration)"
+
+# Add all key-chain SSH identities on the login
+ssh-add -A 2>/dev/null
+
+# define aliases
+alias e='code .'
+alias h='hive'
+alias d='docker'
+alias m='make'
+alias g='git'
+
+alias less='less -R'
+alias grep='grep --color'
+
+alias top='top -F -o cpu -O vsize'
+alias mc='EDITOR=code mc'
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias iplocal="ipconfig getifaddr en0"
+alias network.connections='lsof -l -i +L -R -V'
+alias network.established='lsof -l -i +L -R -V | grep ESTABLISHED'
+
+{{- if eq .chezmoi.os "darwin" }}
+alias ls='ls -lhG'
+alias la='ls -lhGa'
+{{- else }}
+alias ls='ls -lh --color --group-directories-first'
+alias la='ls -lha --color --group-directories-first'
+{{- end }}

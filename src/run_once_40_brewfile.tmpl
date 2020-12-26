@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+{{- if eq .chezmoi.os "darwin" }}
+
+echo "Installing packages..."
+
+# install whatever we can without failing.
+brew bundle "--file={{- .chezmoi.sourceDir }}/setup/Brewfile" || true
+
+{{- end }}

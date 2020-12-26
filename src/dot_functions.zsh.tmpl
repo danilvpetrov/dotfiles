@@ -28,69 +28,12 @@ function cwd () {
   pwd | tr -d '\n' | pbcopy
 }
 
-function op_check_session(){
-  # attempt sign in if session is not active
-  if ! op get account &> /dev/null; then
-      op_signin
-      op_check_session
-  fi
-}
-
-function op_signin() {
-    while [ -z "$OP_EMAIL" ]; do
-        echo -n "1Password email address: "
-        read OP_EMAIL
-    done
-
-    while [ -z "$OP_KEY" ]; do
-        echo -n "1Password secret key: "
-        read OP_KEY
-    done
-
-    eval $(op signin my "$OP_EMAIL" "$OP_KEY")
-}
-
-
-
-function op_download_document() {
-  # make sure the user is signed in
-  op_check_session
-
-  local i=$(op get item --account=my "$1" | jq '{uuid: (.uuid), vuuid: (.vaultUuid)}')
-  op get document --account=my \
-    $(echo $i | jq --raw-output '.uuid') \
-    $(echo $i | jq --raw-output '.vuuid') \
-    > "$2"
-  chmod $3 "$2"
-}
-
-function op_get_password() {
-  # make sure the user is signed in
-  op_check_session
-
-  echo $(op get item --account=my "$1" | jq --raw-output '.details.password')
-}
-
-function op_get_login_username() {
-  # make sure the user is signed in
-  op_check_session
-
-  echo $(op get item --account=my "$1" | jq --raw-output '.details.fields[]? | select(.designation == "username") | .value')
-}
-
-function op_get_login_password() {
-  # make sure the user is signed in
-  op_check_session
-
-  echo $(op get item --account=my "$1" | jq --raw-output '.details.fields[]? | select(.designation == "password") | .value')
-}
-
 function mkcdir()
 {
    mkdir -p -- "$1" && cd -P -- "$1"
 }
 
-
+{{- if eq .chezmoi.os "darwin" }}
 function winkbr() {
   # see this for reference: https://developer.apple.com/library/archive/technotes/tn2450/_index.html
   # 1. assign capslock to escape key
@@ -116,3 +59,4 @@ function resetkbr() {
   # reset all user key mappings
   hidutil property --set '{"UserKeyMapping":[]}'
 }
+{{- end }}

@@ -22,6 +22,13 @@ else
     brew install jq
 fi
 
+if hash chezmoi 2>/dev/null; then
+    echo "chezmoi already installed."
+else
+    echo "Installing chezmoi..."
+    brew install chezmoi
+fi
+
 if hash mas 2>/dev/null; then
     echo "mas already installed."
 else
@@ -36,28 +43,43 @@ else
     brew cask install 1password-cli
 fi
 
+while ! op list vaults --account="my" > /dev/null 2>&1; do
+    # Check if the 1Password account is already known to the CLI, and if so use
+    # the "short form" sign-in syntax. This prevents the need to re-enter the
+    # secret key if it is already known.
+    if cat ~/.op/config | jq --exit-status '.accounts | .[] | select(.shorthand == "my")' > /dev/null; then
+        eval $(op signin "my")
+    else
+        while [ -z "$OP_EMAIL" ]; do
+            echo -n "1Password email address: "
+            read OP_EMAIL
+        done
+
+        while [ -z "$OP_KEY" ]; do
+            echo -n "1Password secret key: "
+            read OP_KEY
+        done
+
+        eval $(op signin my "$OP_EMAIL" "$OP_KEY")
+    fi
+done
+
 sudo spctl --add "$(which op)"
 
-if [[ -z "$GITHUB_USER" ]]; then
-    echo -n "GitHub user: "
-    read GITHUB_USER
-fi
-
-if [[ -z "$GITHUB_USER" ]]; then
-    echo "GITHUB_USER not defined."
-    exit 1
-fi
-
-DOTFILES_PATH="$HOME/grit/github.com/$GITHUB_USER/dotfiles"
+DOTFILES_PATH="$HOME/grit/github.com/danilvpetrov/dotfiles"
+DOTFILES_BRANCH="chezmoi"
 
 if [[ -d "$DOTFILES_PATH" ]]; then
-    echo "Pulling $GITHUB_USER/dotfiles..."
+    echo "Pulling danilvpetrov/dotfiles..."
     pushd "$DOTFILES_PATH" > /dev/null
     git pull
     popd > /dev/null
 else
-    echo "Cloning $GITHUB_USER/dotfiles..."
-    git clone "https://github.com/$GITHUB_USER/dotfiles.git" "$DOTFILES_PATH"
+    echo "Cloning danilvpetrov/dotfiles..."
+    git clone \
+        --branch "$DOTFILES_BRANCH" \
+        --single-branch "https://github.com/danilvpetrov/dotfiles.git" \
+        "$DOTFILES_PATH"
 fi
 
 if [[ -e "$HOME/dotfiles" ]]; then
@@ -65,9 +87,6 @@ if [[ -e "$HOME/dotfiles" ]]; then
 else
     ln -s "$DOTFILES_PATH" "$HOME/dotfiles"
 fi
-
-# start using utility functions
-source "$HOME/dotfiles/dotfiles/.functions.zsh"
 
 if mas account; then
     echo "App store sign in detected."
@@ -79,8 +98,14 @@ else
     exit 1
 fi
 
-for FILE in "$HOME/dotfiles/setup/"*-*.bash; do
-  source "$FILE"
-done
+CHEZMOI_SOURCE_PATH="${DOTFILES_PATH}"/src
+CHEZMOI_DESTINATION_PATH="${HOME}"/chezmoi-tmp-output
+
+# Ensure the destination folder exists.
+mkdir -p "$CHEZMOI_DESTINATION_PATH"
+
+chezmoi apply --verbose \
+                --source "$CHEZMOI_SOURCE_PATH" \
+                --destination "$CHEZMOI_DESTINATION_PATH"
 
 echo "Done. System must be restarted for some changes to take effect."

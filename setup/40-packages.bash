@@ -8,6 +8,6 @@ gem install --user-install \
   travis || true
 
 # install whatever we can without failing.
-brew bundle "--file=$HOME/Brewfile" || true
+brew bundle "--file={{ .chezmoi.sourceDir }}/Brewfile" || true
 # link MySQL client without failing.
 brew link --force mysql-client || true

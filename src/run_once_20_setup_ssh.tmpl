@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+{{- if eq .chezmoi.os "darwin" }}
+
+echo "Setting up SSH..."
+
+PRIVKEY="/.ssh/id_rsa"
+PUBKEY="{{- .chezmoi.homedir }}/.ssh/id_rsa.pub"
+
+echo "Adding SSH passphrase to keychain..."
+cat "$PRIVKEY" | DISPLAY= SSH_ASKPASS="{{- (onepassword "id_rsa").details.notesPlain -}}" ssh-add -K
+
+if [ "$PUBKEY" -ot "$PRIVKEY" ]; then
+    echo "Generating public SSH key from private key..."
+    ssh-keygen -P "{{- (onepassword "id_rsa").details.notesPlain -}}" -yf "$PRIVKEY" > "$PUBKEY.tmp"
+    mv "$PUBKEY.tmp" "$PUBKEY"
+fi
+
+{{- end }}
