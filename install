@@ -67,7 +67,7 @@ done
 sudo spctl --add "$(which op)"
 
 DOTFILES_PUBLIC_PATH="$HOME/grit/github.com/danilvpetrov/dotfiles"
-DOTFILES_PUBLIC_REPO="github.com/danilvpetrov/dotfiles"
+DOTFILES_PUBLIC_REPO="https://danilvpetrov@github.com/danilvpetrov/dotfiles.git"
 DOTFILES_BRANCH="main"
 
 if [[ -d "$DOTFILES_PUBLIC_PATH" ]]; then
@@ -79,7 +79,7 @@ else
     echo "Cloning public dotfiles"
     git clone \
         --branch "$DOTFILES_BRANCH" \
-        --single-branch "https://${DOTFILES_PUBLIC_REPO}.git" \
+        --single-branch "$DOTFILES_PUBLIC_REPO" \
         "$DOTFILES_PUBLIC_PATH"
 fi
 
