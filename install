@@ -67,11 +67,7 @@ done
 sudo spctl --add "$(which op)"
 
 DOTFILES_PUBLIC_PATH="$HOME/grit/github.com/danilvpetrov/dotfiles"
-DOTFILES_PUBLIC_HTTPS="https://github.com/danilvpetrov/dotfiles.git"
-DOTFILES_PRIVATE_PATH="$HOME/grit/github.com/danilvpetrov/dotfiles-private"
-DOTFILES_PRIVATE_HTTPS="https://github.com/danilvpetrov/dotfiles-private.git"
-
-
+DOTFILES_PUBLIC_REPO="github.com/danilvpetrov/dotfiles"
 DOTFILES_BRANCH="main"
 
 if [[ -d "$DOTFILES_PUBLIC_PATH" ]]; then
@@ -83,33 +79,14 @@ else
     echo "Cloning public dotfiles"
     git clone \
         --branch "$DOTFILES_BRANCH" \
-        --single-branch "$DOTFILES_PUBLIC_HTTPS" \
+        --single-branch "https://${DOTFILES_PUBLIC_REPO}.git" \
         "$DOTFILES_PUBLIC_PATH"
-fi
-
-if [[ -d "$DOTFILES_PRIVATE_PATH" ]]; then
-    echo "Pulling private dotfiles..."
-    pushd "$DOTFILES_PRIVATE_PATH" > /dev/null
-    git pull --ff-only
-    popd > /dev/null
-else
-    echo "Cloning private dotfiles..."
-    git clone \
-        --branch "$DOTFILES_BRANCH" \
-        --single-branch "$DOTFILES_PRIVATE_HTTPS" \
-        "$DOTFILES_PRIVATE_PATH"
 fi
 
 if [[ -e "$HOME/dotfiles" ]]; then
     echo "Public dotfiles shortcut directory already exists."
 else
     ln -s "$DOTFILES_PUBLIC_PATH" "$HOME/dotfiles"
-fi
-
-if [[ -e "$HOME/dotfiles-private" ]]; then
-    echo "Private dotfiles shortcut directory already exists."
-else
-    ln -s "$DOTFILES_PRIVATE_PATH" "$HOME/dotfiles-private"
 fi
 
 if mas account; then
@@ -130,6 +107,8 @@ chezmoi apply --verbose \
                 --source "$CHEZMOI_SOURCE_PATH" \
                 --destination "$CHEZMOI_DESTINATION_PATH"
 
+
+DOTFILES_PRIVATE_PATH="$HOME/grit/github.com/danilvpetrov/dotfiles-private"
 
 # Run chezmoi for the private dotfiles.
 CHEZMOI_SOURCE_PATH="${DOTFILES_PRIVATE_PATH}"/src
