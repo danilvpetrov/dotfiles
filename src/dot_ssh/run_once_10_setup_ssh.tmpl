@@ -4,7 +4,7 @@ set -e
 
 echo "Setting up SSH..."
 
-PRIVKEY="/.ssh/id_rsa"
+PRIVKEY="{{- .chezmoi.homedir }}/.ssh/id_rsa"
 PUBKEY="{{- .chezmoi.homedir }}/.ssh/id_rsa.pub"
 
 echo "Adding SSH passphrase to keychain..."
