@@ -3,7 +3,7 @@
 set -e
 
 DOTFILES_PRIVATE_PATH="{{- .chezmoi.homedir }}/grit/github.com/danilvpetrov/dotfiles-private"
-DOTFILES_PRIVATE_HTTPS="https://github.com/danilvpetrov/dotfiles-private.git"
+DOTFILES_PRIVATE_REPO="git@github.com:danilvpetrov/dotfiles-private.git"
 DOTFILES_BRANCH="main"
 
 if [[ -d "$DOTFILES_PRIVATE_PATH" ]]; then
@@ -15,7 +15,7 @@ else
     echo "Cloning private dotfiles..."
     git clone \
         --branch "$DOTFILES_BRANCH" \
-        --single-branch "$DOTFILES_PRIVATE_HTTPS" \
+        --single-branch "$DOTFILES_PRIVATE_REPO" \
         "$DOTFILES_PRIVATE_PATH"
 fi
 
