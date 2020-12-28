@@ -67,7 +67,7 @@ done
 sudo spctl --add "$(which op)"
 
 DOTFILES_PATH="$HOME/grit/github.com/danilvpetrov/dotfiles"
-DOTFILES_BRANCH="chezmoi"
+DOTFILES_BRANCH="main"
 
 if [[ -d "$DOTFILES_PATH" ]]; then
     echo "Pulling danilvpetrov/dotfiles..."
@@ -99,7 +99,7 @@ else
 fi
 
 CHEZMOI_SOURCE_PATH="${DOTFILES_PATH}"/src
-CHEZMOI_DESTINATION_PATH="${HOME}"/chezmoi-tmp-output
+CHEZMOI_DESTINATION_PATH="${HOME}"
 
 # Ensure the destination folder exists.
 mkdir -p "$CHEZMOI_DESTINATION_PATH"

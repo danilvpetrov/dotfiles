@@ -7,6 +7,6 @@ set -e
 echo "Installing packages..."
 
 # install whatever we can without failing.
-brew bundle "--file={{- .chezmoi.sourceDir }}/setup/Brewfile" || true
+brew bundle --no-lock --file="{{ .chezmoi.sourceDir }}/Brewfile" || true
 
 {{- end }}

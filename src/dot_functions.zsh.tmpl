@@ -33,7 +33,7 @@ function mkcdir()
    mkdir -p -- "$1" && cd -P -- "$1"
 }
 
-{{- if eq .chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" }}
 function winkbr() {
   # see this for reference: https://developer.apple.com/library/archive/technotes/tn2450/_index.html
   # 1. assign capslock to escape key

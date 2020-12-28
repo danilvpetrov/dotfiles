@@ -16,6 +16,7 @@ if [ "$PUBKEY" -ot "$PRIVKEY" ]; then
     echo "Generating public SSH key from private key..."
     ssh-keygen -P "{{- (onepassword "id_rsa").details.notesPlain -}}" -yf "$PRIVKEY" > "$PUBKEY.tmp"
     mv "$PUBKEY.tmp" "$PUBKEY"
+    chmod 0644 "$PUBKEY"
 fi
 
 {{- end }}

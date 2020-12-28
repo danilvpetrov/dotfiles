@@ -1,6 +1,7 @@
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "jmalloc/grit"
+tap "dbcli/tap"
 
 
 brew "cfssl"
@@ -17,8 +18,13 @@ brew "tree"
 brew "watch"
 brew "vim"
 brew "less"
-brew "unrar"
 brew "zsh"
+brew "litecli"
+brew "mycli"
+brew "pgcli"
+brew "gh"
+brew "clang-format"
+
 
 cask "1password-cli"
 cask "1password"
