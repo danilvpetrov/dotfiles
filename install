@@ -40,7 +40,7 @@ if hash op 2>/dev/null; then
     echo "1Password CLI already installed."
 else
     echo "Installing 1Password CLI..."
-    brew cask install 1password-cli
+    brew install --cask 1password-cli
 fi
 
 while ! op list vaults --account="my" > /dev/null 2>&1; do
