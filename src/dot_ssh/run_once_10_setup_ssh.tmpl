@@ -2,8 +2,6 @@
 
 set -e
 
-{{- if eq .chezmoi.os "darwin" }}
-
 echo "Setting up SSH..."
 
 PRIVKEY="/.ssh/id_rsa"
@@ -19,4 +17,12 @@ if [ "$PUBKEY" -ot "$PRIVKEY" ]; then
     chmod 0644 "$PUBKEY"
 fi
 
-{{- end }}
+DOTFILES_PUBLIC_PATH="{{- .chezmoi.homedir }}/grit/github.com/danilvpetrov/dotfiles"
+DOTFILES_PUBLIC_REPO="github.com/danilvpetrov/dotfiles"
+
+pushd "$DOTFILES_PUBLIC_PATH" > /dev/null
+if git remote get-url origin | grep "https://" > /dev/null; then
+    echo "Switching dotfiles repo use SSH..."
+    git remote set-url origin "git@github.com:$DOTFILES_PUBLIC_REPO.git"
+fi
+popd > /dev/null
