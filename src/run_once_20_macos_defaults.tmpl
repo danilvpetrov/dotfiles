@@ -178,6 +178,13 @@ sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate.plist ConfigDa
 sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate.plist CriticalUpdateInstall -bool true
 sudo defaults write /Library/Preferences/com.apple.commerce.plist AutoUpdate -bool true
 
+
+defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+defaults write com.googlecode.iterm2 OnlyWhenMoreTabs -bool false
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "{{- .chezmoi.homedir }}/Library/Mobile Documents/com~apple~CloudDocs/Configurations/iterm2"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+
+
 # Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
 defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
