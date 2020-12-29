@@ -6,23 +6,36 @@ echo "Setting up SSH..."
 
 PRIVKEY="{{- .chezmoi.homedir }}/.ssh/id_rsa"
 PUBKEY="{{- .chezmoi.homedir }}/.ssh/id_rsa.pub"
+pwd="{{- (onepassword "id_rsa").details.notesPlain -}}"
+
+tmpfile=$(mktemp)
+chmod +x "$tmpfile"
+
+>"$tmpfile" cat <<EOS
+#!/usr/bin/env bash
+
+echo "${pwd}"
+EOS
 
 echo "Adding SSH passphrase to keychain..."
-cat "$PRIVKEY" | DISPLAY= SSH_ASKPASS="{{- (onepassword "id_rsa").details.notesPlain -}}" ssh-add -K
+# See for the explanation of the command below: https://stackoverflow.com/a/38356798
+DISPLAY= SSH_ASKPASS="$tmpfile" ssh-add -K "$PRIVKEY" < /dev/null
+
+rm "$tmpfile"
 
 if [ "$PUBKEY" -ot "$PRIVKEY" ]; then
     echo "Generating public SSH key from private key..."
-    ssh-keygen -P "{{- (onepassword "id_rsa").details.notesPlain -}}" -yf "$PRIVKEY" > "$PUBKEY.tmp"
+    ssh-keygen -P "${pwd}" -yf "$PRIVKEY" > "$PUBKEY.tmp"
     mv "$PUBKEY.tmp" "$PUBKEY"
     chmod 0644 "$PUBKEY"
 fi
 
 DOTFILES_PUBLIC_PATH="{{- .chezmoi.homedir }}/grit/github.com/danilvpetrov/dotfiles"
-DOTFILES_PUBLIC_REPO="github.com/danilvpetrov/dotfiles"
+DOTFILES_PUBLIC_REPO_SLUG="danilvpetrov/dotfiles"
 
 pushd "$DOTFILES_PUBLIC_PATH" > /dev/null
 if git remote get-url origin | grep "https://" > /dev/null; then
     echo "Switching dotfiles repo use SSH..."
-    git remote set-url origin "git@github.com:$DOTFILES_PUBLIC_REPO.git"
+    git remote set-url origin "git@github.com:$DOTFILES_PUBLIC_REPO_SLUG.git"
 fi
 popd > /dev/null
