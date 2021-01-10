@@ -99,6 +99,12 @@ else
     exit 1
 fi
 
+if [[ -e "$HOME/icloud" ]]; then
+    echo "iCloud shortcut directory already exists."
+else
+    ln -s "$HOME/Library/Mobile Documents/com~apple~CloudDocs" "$HOME/icloud"
+fi
+
 # Run chezmoi for the public dotfiles.
 CHEZMOI_SOURCE_PATH="${DOTFILES_PUBLIC_PATH}"/src
 CHEZMOI_DESTINATION_PATH="${HOME}"
