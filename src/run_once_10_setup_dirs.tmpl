@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-echo "Creating directories..."
-
-[ -e "{{- .chezmoi.homedir }}/bin" ] || mkdir -p "{{- .chezmoi.homedir }}/bin"
-[ -e "{{- .chezmoi.homedir }}/go" ] || mkdir -p "{{- .chezmoi.homedir }}/go"
