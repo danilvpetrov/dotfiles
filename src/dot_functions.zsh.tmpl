@@ -34,29 +34,50 @@ function mkcdir()
 }
 
 {{ if eq .chezmoi.os "darwin" }}
-function winkbr() {
-  # see this for reference: https://developer.apple.com/library/archive/technotes/tn2450/_index.html
-  # 1. assign capslock to escape key
-  # 2. swap right control and right alt
-  # 3. swap left gui with left alt
-  hidutil property --set '{"UserKeyMapping":
-    [
-      {"HIDKeyboardModifierMappingSrc":0x700000039,
-        "HIDKeyboardModifierMappingDst":0x700000029},
-      {"HIDKeyboardModifierMappingSrc":0x7000000e6,
-        "HIDKeyboardModifierMappingDst":0x7000000e4},
-      {"HIDKeyboardModifierMappingSrc":0x7000000e4,
-        "HIDKeyboardModifierMappingDst":0x7000000e6},
-      {"HIDKeyboardModifierMappingSrc":0x7000000E2,
-        "HIDKeyboardModifierMappingDst":0x7000000E3},
-         {"HIDKeyboardModifierMappingSrc":0x7000000E3,
-        "HIDKeyboardModifierMappingDst":0x7000000E2}
-    ]
-  }'
+# this function loads the key mappings and installs the script that is
+# executed on every login. The key mappings include the following:
+#
+# 1. CapsLock to Escape key
+# 2. Swap right control and option keys.
+function remapkbr_on() {
+  mkdir -p ${HOME}/Library/LaunchAgents
+
+  hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x700000029}, {"HIDKeyboardModifierMappingSrc":0x7000000e6,"HIDKeyboardModifierMappingDst":0x7000000e4}, {"HIDKeyboardModifierMappingSrc":0x7000000e4,"HIDKeyboardModifierMappingDst":0x7000000e6}]}'
+
+  cat <<-"EOF" > ${HOME}/Library/LaunchAgents/com.ldaws.KeyboardRemapping.plist
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Place in ~/Library/LaunchAgents/ -->
+<!-- launchctl load com.ldaws.KeyboardRemapping.plist -->
+<!-- See this for reference: https://developer.apple.com/library/archive/technotes/tn2450/_index.html -->
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.ldaws.KeyboardRemapping.plist</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/bin/hidutil</string>
+      <string>property</string>
+      <string>--set</string>
+      <string>'{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x700000029}, {"HIDKeyboardModifierMappingSrc":0x7000000e6,"HIDKeyboardModifierMappingDst":0x7000000e4}, {"HIDKeyboardModifierMappingSrc":0x7000000e4,"HIDKeyboardModifierMappingDst":0x7000000e6}]}'</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+  </dict>
+</plist>
+EOF
+
+  chmod 0600 ${HOME}/Library/LaunchAgents/com.ldaws.KeyboardRemapping.plist
+  launchctl load ${HOME}/Library/LaunchAgents/com.ldaws.KeyboardRemapping.plist
 }
 
-function resetkbr() {
-  # reset all user key mappings
+# this function undoes any keyboard mapping done by remapkbr_on function. It also
+# uninstalls the script and removes the script file.
+function remapkbr_off() {
   hidutil property --set '{"UserKeyMapping":[]}'
+  launchctl unload ${HOME}/Library/LaunchAgents/com.ldaws.KeyboardRemapping.plist
+  rm -f ${HOME}/Library/LaunchAgents/com.ldaws.KeyboardRemapping.plist
 }
 {{- end }}
+
+
