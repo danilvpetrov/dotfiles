@@ -21,7 +21,7 @@ else
 
   # Fix insecure directories in zsh if any
   # See https://github.com/zsh-users/zsh-completions/issues/433 for details.
-  compaudit | xargs chmod g-w
+  compaudit | xargs sudo chmod g-w
 fi
 
 if [[ -e "{{- .chezmoi.homedir }}/.zprezto" ]]; then
