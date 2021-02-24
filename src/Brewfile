@@ -19,6 +19,7 @@ brew "watch"
 brew "vim"
 brew "less"
 brew "zsh"
+brew "zsh-completion"
 brew "litecli"
 brew "mycli"
 brew "pgcli"
@@ -35,6 +36,8 @@ cask "iterm2"
 cask "slack"
 cask "tunnelblick"
 cask "visual-studio-code"
+
+brew "docker-completion"
 
 mas "Magnet", id: 441258766
 
