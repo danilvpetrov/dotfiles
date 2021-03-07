@@ -84,7 +84,7 @@ function remapkbr_off() {
   hidutil property --set '{"UserKeyMapping":[]}'
   # the commands below can fail with Unload failed: 5: Input/output error, hence is
   # the error override.
-  launchctl start ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist 2>/dev/null | true
+  launchctl stop ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist 2>/dev/null | true
   launchctl unload ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist 2>/dev/null | true
   rm -f ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist
 }
