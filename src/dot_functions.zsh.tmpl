@@ -41,12 +41,14 @@ function mkcdir()
 # 2. Swap right control and option keys.
 function remapkbr_on() {
   mkdir -p ${HOME}/Library/LaunchAgents
+  file=${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist
+
   # the command below can fail with Unload failed: 5: Input/output error, hence is
   # the error override.
-  launchctl unload ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist 2>/dev/null | true
-  rm -rf ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist
+  launchctl unload $file 2>/dev/null | true
+  rm -rf $file
 
-  cat <<-EOF > ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist
+  cat <<-EOF > $file
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -66,27 +68,27 @@ function remapkbr_on() {
     <true/>
     <key>StandardErrorPath</key>
     <string>/usr/local/var/log/kbr-remapping.log</string>
-    <key>StandardOutPath</key>
-    <string>/usr/local/var/log/kbr-remapping.log</string>
   </dict>
 </plist>
 
 EOF
 
-  chmod 0644 ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist
-  launchctl load ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist
-  launchctl start ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist
+  chmod 0644 $file
+  launchctl load $file
+  launchctl start $file
 }
 
 # this function undoes any keyboard mapping done by remapkbr_on function. It also
 # uninstalls the launchclt agent that runs remapping on the user's login.
 function remapkbr_off() {
   hidutil property --set '{"UserKeyMapping":[]}'
+
+  file=${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist
   # the commands below can fail with Unload failed: 5: Input/output error, hence is
   # the error override.
-  launchctl stop ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist 2>/dev/null | true
-  launchctl unload ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist 2>/dev/null | true
-  rm -f ${HOME}/Library/LaunchAgents/user.keyboard.keyremapping.plist
+  launchctl stop $file 2>/dev/null | true
+  launchctl unload $file 2>/dev/null | true
+  rm -f $file
 }
 {{- end }}
 
