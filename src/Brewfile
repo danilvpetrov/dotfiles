@@ -3,6 +3,8 @@ tap "homebrew/cask-versions"
 tap "jmalloc/grit"
 tap "dbcli/tap"
 tap "ktr0731/evans"
+tap "teamookla/speedtest"
+
 
 
 brew "cfssl"
@@ -11,6 +13,7 @@ brew "git"
 brew "go"
 brew "grit"
 brew "htop"
+brew "speedtest"
 brew "midnight-commander"
 brew "jmalloc/grit/grit"
 brew "jq"
