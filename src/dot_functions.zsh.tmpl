@@ -92,4 +92,8 @@ function remapkbr_off() {
 }
 {{- end }}
 
+# This function exports the paths to platform.io executables in the current terminal session.
+function platformioenv() {
+  export PATH="${HOME}/.platformio/penv/bin:${HOME}/.platformio/penv:${HOME}/.platformio/python3/bin:$PATH"
+}
 
