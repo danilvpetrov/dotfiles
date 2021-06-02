@@ -10,7 +10,6 @@ if [[ $SHLVL = 1 ]]; then
   # Golang-related environment variables
   export GOPATH="{{- .chezmoi.homedir }}/go"
   export GOPROXY="direct"
-  export GOSUMDB="off"
 
   # local bin and GOBIN path
   export PATH="{{- .chezmoi.homedir }}/bin:$PATH"
