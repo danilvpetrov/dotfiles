@@ -14,6 +14,7 @@ if [[ $SHLVL = 1 ]]; then
   # local bin and GOBIN path
   export PATH="{{- .chezmoi.homedir }}/bin:$PATH"
   export PATH="$GOPATH/bin:$PATH"
+  export PATH="/usr/local/opt/node@16/bin:$PATH"
 
   # export less flags
   export LESS="--quit-if-one-screen --hilite-search --hilite-unread --ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --chop-long-lines  --window=-4"
