@@ -12,7 +12,7 @@ if hash brew 2>/dev/null; then
     echo "Homebrew already installed."
 else
     echo "Installing Homebrew..."
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 if hash jq 2>/dev/null; then
@@ -108,16 +108,6 @@ fi
 # Run chezmoi for the public dotfiles.
 CHEZMOI_SOURCE_PATH="${DOTFILES_PUBLIC_PATH}"/src
 CHEZMOI_DESTINATION_PATH="${HOME}"
-
-chezmoi apply --verbose \
-                --source "$CHEZMOI_SOURCE_PATH" \
-                --destination "$CHEZMOI_DESTINATION_PATH"
-
-
-DOTFILES_PRIVATE_PATH="$HOME/grit/github.com/danilvpetrov/dotfiles-private"
-
-# Run chezmoi for the private dotfiles.
-CHEZMOI_SOURCE_PATH="${DOTFILES_PRIVATE_PATH}"/src
 
 chezmoi apply --verbose \
                 --source "$CHEZMOI_SOURCE_PATH" \
