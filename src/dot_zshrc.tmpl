@@ -11,10 +11,10 @@ unsetopt correct
 ulimit -n 8192 # set shell's open file handle limit
 
 # import the core functions
-source "{{- .chezmoi.homedir }}/.functions.zsh"
+source "{{- .chezmoi.homeDir }}/.functions.zsh"
 
 # import the private functions
-source-if-exists "{{- .chezmoi.homedir }}/.functions.private.zsh"
+source-if-exists "{{- .chezmoi.homeDir }}/.functions.private.zsh"
 
 source-if-exists "$(brew --prefix)/etc/profile.d/z.sh"
 
@@ -38,10 +38,10 @@ export MANPATH="/usr/local/man:$MANPATH"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Enable autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Enable fast syntax highlighting
-source /usr/local/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 eval "$(grit shell-integration)"
 

@@ -88,31 +88,31 @@ defaults write com.apple.finder FinderSpawnTab -bool false
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 # Sort icon views by name
-plist-set-or-add ":DesktopViewSettings:IconViewSettings:arrangeBy name" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
-plist-set-or-add ":FK_StandardViewSettings:IconViewSettings:arrangeBy name" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
-plist-set-or-add ":StandardViewSettings:IconViewSettings:arrangeBy name" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":DesktopViewSettings:IconViewSettings:arrangeBy name" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":FK_StandardViewSettings:IconViewSettings:arrangeBy name" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":StandardViewSettings:IconViewSettings:arrangeBy name" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
 
 # Show item info in icon views
-plist-set-or-add ":DesktopViewSettings:IconViewSettings:showItemInfo true" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
-plist-set-or-add ":FK_StandardViewSettings:IconViewSettings:showItemInfo true" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
-plist-set-or-add ":StandardViewSettings:IconViewSettings:showItemInfo true" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":DesktopViewSettings:IconViewSettings:showItemInfo true" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":FK_StandardViewSettings:IconViewSettings:showItemInfo true" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":StandardViewSettings:IconViewSettings:showItemInfo true" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
 
 # Minimize grid spacing in icon views
-plist-set-or-add ":DesktopViewSettings:IconViewSettings:gridSpacing 1" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
-plist-set-or-add ":FK_StandardViewSettings:IconViewSettings:gridSpacing 1" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
-plist-set-or-add ":StandardViewSettings:IconViewSettings:gridSpacing 1" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":DesktopViewSettings:IconViewSettings:gridSpacing 1" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":FK_StandardViewSettings:IconViewSettings:gridSpacing 1" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":StandardViewSettings:IconViewSettings:gridSpacing 1" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
 
 # Set the icon size in icon views
-plist-set-or-add ":DesktopViewSettings:IconViewSettings:iconSize 64" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
-plist-set-or-add ":FK_StandardViewSettings:IconViewSettings:iconSize 64" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
-plist-set-or-add ":StandardViewSettings:IconViewSettings:iconSize 64" "{{- .chezmoi.homedir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":DesktopViewSettings:IconViewSettings:iconSize 64" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":FK_StandardViewSettings:IconViewSettings:iconSize 64" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
+plist-set-or-add ":StandardViewSettings:IconViewSettings:iconSize 64" "{{- .chezmoi.homeDir }}/Library/Preferences/com.apple.finder.plist"
 
 # Keep directories at the top when sorting in Finder
 defaults write com.apple.finder _FXSortFoldersFirst -bool true
 
 # Use the home directory as the default location for new Finder windows
 defaults write com.apple.finder NewWindowTarget -string "PfHm"
-defaults write com.apple.finder NewWindowTargetPath -string "file://{{- .chezmoi.homedir }}/"
+defaults write com.apple.finder NewWindowTargetPath -string "file://{{- .chezmoi.homeDir }}/"
 
 # Finder should search the current directory by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
@@ -181,7 +181,7 @@ sudo defaults write /Library/Preferences/com.apple.commerce.plist AutoUpdate -bo
 
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 defaults write com.googlecode.iterm2 OnlyWhenMoreTabs -bool false
-defaults write com.googlecode.iterm2 PrefsCustomFolder -string "{{- .chezmoi.homedir }}/icloud/Configurations/iterm2"
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "{{- .chezmoi.homeDir }}/icloud/Configurations/iterm2"
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 
 
@@ -233,8 +233,8 @@ defaults write com.apple.spotlight orderedItems -array \
 defaults write com.apple.controlstrip MiniCustomized "(com.apple.system.brightness, com.apple.system.volume, com.apple.system.mute, com.apple.system.media-play-pause)"
 
 # Save screenshots to a dedicated directory
-mkdir -p "{{- .chezmoi.homedir }}/Screenshots"
-defaults write com.apple.screencapture location -string "{{- .chezmoi.homedir }}/Screenshots"
+mkdir -p "{{- .chezmoi.homeDir }}/Screenshots"
+defaults write com.apple.screencapture location -string "{{- .chezmoi.homeDir }}/Screenshots"
 
 # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
 defaults write com.apple.screencapture type -string "png"

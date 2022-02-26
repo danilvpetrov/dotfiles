@@ -4,8 +4,8 @@ set -e
 
 echo "Setting up SSH..."
 
-PRIVKEY="{{- .chezmoi.homedir }}/.ssh/id_rsa"
-PUBKEY="{{- .chezmoi.homedir }}/.ssh/id_rsa.pub"
+PRIVKEY="{{- .chezmoi.homeDir }}/.ssh/id_rsa"
+PUBKEY="{{- .chezmoi.homeDir }}/.ssh/id_rsa.pub"
 pwd="{{- (onepassword "id_rsa").details.notesPlain -}}"
 
 tmpfile=$(mktemp)
@@ -30,7 +30,7 @@ if [ "$PUBKEY" -ot "$PRIVKEY" ]; then
     chmod 0644 "$PUBKEY"
 fi
 
-DOTFILES_PUBLIC_PATH="{{- .chezmoi.homedir }}/grit/github.com/danilvpetrov/dotfiles"
+DOTFILES_PUBLIC_PATH="{{- .chezmoi.homeDir }}/grit/github.com/danilvpetrov/dotfiles"
 DOTFILES_PUBLIC_REPO_SLUG="danilvpetrov/dotfiles"
 
 pushd "$DOTFILES_PUBLIC_PATH" > /dev/null

@@ -5,14 +5,15 @@ fi
 
 if [[ $SHLVL = 1 ]]; then
   # import the core functions
-  source "{{- .chezmoi.homedir }}/.functions.zsh"
+  source "{{- .chezmoi.homeDir }}/.functions.zsh"
 
   # Golang-related environment variables
-  export GOPATH="{{- .chezmoi.homedir }}/go"
+  export GOPATH="{{- .chezmoi.homeDir }}/go"
   export GOPROXY="direct"
 
-  # local bin and GOBIN path
-  export PATH="{{- .chezmoi.homedir }}/bin:$PATH"
+  # add paths
+  export PATH="/opt/homebrew/bin:$PATH"
+  export PATH="{{- .chezmoi.homeDir }}/bin:$PATH"
   export PATH="$GOPATH/bin:$PATH"
   export PATH="/usr/local/opt/node@16/bin:$PATH"
 
@@ -23,5 +24,5 @@ if [[ $SHLVL = 1 ]]; then
   HOMEBREW_GITHUB_API_TOKEN={{ (onepassword "Github Token").details.password }}
 
   # load private environment variables
-  source-if-exists "{{- .chezmoi.homedir }}/.zshenv.private"
+  source-if-exists "{{- .chezmoi.homeDir }}/.zshenv.private"
 fi
