@@ -15,7 +15,7 @@ if [[ $SHLVL = 1 ]]; then
   export PATH="/opt/homebrew/bin:$PATH"
   export PATH="{{- .chezmoi.homeDir }}/bin:$PATH"
   export PATH="$GOPATH/bin:$PATH"
-  export PATH="/usr/local/opt/node@16/bin:$PATH"
+  export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
 
   # export less flags
   export LESS="--quit-if-one-screen --hilite-search --hilite-unread --ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --chop-long-lines  --window=-4"
