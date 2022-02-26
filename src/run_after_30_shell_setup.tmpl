@@ -21,14 +21,14 @@ else
 
   # Fix insecure directories in zsh if any
   # See https://github.com/zsh-users/zsh-completions/issues/433 for details.
-  compaudit | xargs sudo chmod g-w
+  chmod -R go-w '/usr/local/share/zsh'
 fi
 
-if [[ -e "{{- .chezmoi.homedir }}/.zprezto" ]]; then
-  echo "Prezto already installed."
+if [[ -e "{{- .chezmoi.homedir }}/..oh-my-zsh" ]]; then
+  echo "oh-my-zsh already installed."
 else
-  echo "Installing Prezto..."
-  git clone --recursive https://github.com/sorin-ionescu/prezto.git "{{- .chezmoi.homedir }}/.zprezto"
+  echo "Installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 
