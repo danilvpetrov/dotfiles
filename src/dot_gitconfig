@@ -7,8 +7,8 @@
     excludesfile = ~/.gitignore.global
     whitespace = trailing-space,space-before-tab,tabwidth=4
 
-[include]
-    path = ~/.gitconfig.private
+[init]
+	defaultBranch = main
 
 [diff]
     renames = true
