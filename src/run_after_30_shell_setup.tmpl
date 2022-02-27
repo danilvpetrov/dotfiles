@@ -28,9 +28,15 @@ if [[ -e "{{- .chezmoi.homeDir }}/.oh-my-zsh" ]]; then
   echo "oh-my-zsh already installed."
 else
   echo "Installing oh-my-zsh..."
-  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended --keep-zshrc"
+
   echo "Installing oh-my-zsh powerlevel10k theme..."
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+  echo "Installing Powerline fonts..."
+  font_temp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')
+  git clone https://github.com/powerline/fonts.git --depth=1 "${font_temp_dir}"
+  sh "${font_temp_dir}/install.sh"
 fi
 
 
