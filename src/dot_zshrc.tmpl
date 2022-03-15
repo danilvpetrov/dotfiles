@@ -44,6 +44,11 @@ eval "$(grit shell-integration)"
 # Add all key-chain SSH identities on the login
 ssh-add -A 2>/dev/null
 
+# add path overrides for homebrew binaries
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
+
 # define aliases
 alias e='code .'
 alias h='hive'

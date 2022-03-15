@@ -10,19 +10,16 @@ if [[ $SHLVL = 1 ]]; then
   # Golang-related environment variables
   export GOPATH="{{- .chezmoi.homeDir }}/go"
   export GOPROXY="direct"
-
-  # add paths
-  export PATH="/opt/homebrew/bin:$PATH"
-  export PATH="{{- .chezmoi.homeDir }}/bin:$PATH"
   export PATH="$GOPATH/bin:$PATH"
-  export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
-  export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+
+  # add path for user binaries
+  export PATH="{{- .chezmoi.homeDir }}/bin:$PATH"
 
   # export less flags
   export LESS="--quit-if-one-screen --hilite-search --hilite-unread --ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --chop-long-lines  --window=-4"
 
-  GITHUB_TOKEN={{ (onepassword "Github Token").details.password }}
-  HOMEBREW_GITHUB_API_TOKEN={{ (onepassword "Github Token").details.password }}
+  export GITHUB_TOKEN={{ (onepassword "Github Token").details.password }}
+  export HOMEBREW_GITHUB_API_TOKEN={{ (onepassword "Github Token").details.password }}
 
   # load private environment variables
   source-if-exists "{{- .chezmoi.homeDir }}/.zshenv.private"
