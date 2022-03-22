@@ -35,7 +35,7 @@ brew "gh"
 brew "clang-format"
 brew "openssl"
 
-cask "1password-cli"
+cask "1password-cli1"
 cask "1password"
 cask "docker"
 cask "aerial"
