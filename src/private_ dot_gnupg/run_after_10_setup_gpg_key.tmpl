@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "Setting up GPG..."
+
+if hash gpg 2>/dev/null; then
+    echo "gpg already installed."
+else
+    echo "Installing gpg..."
+    brew install gpg
+fi
+
+if hash pinentry-mac 2>/dev/null; then
+    echo "pinentry-mac already installed."
+else
+    echo "Installing pinentry-mac..."
+    brew install pinentry-mac
+fi
+
+echo "Importing GPG key..."
+echo "{{- onepasswordDocument "private.gpg" -}}" | gpg --batch --import --always-trust
+
+echo "default-cache-ttl 28800" > "{{- .chezmoi.homeDir }}/.gnupg/gpg-agent.conf"
+echo "pinentry-program $(which pinentry-mac)" >> "{{- .chezmoi.homeDir }}/.gnupg/gpg-agent.conf"
+gpgconf --kill gpg-agent
