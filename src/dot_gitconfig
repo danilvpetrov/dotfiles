@@ -1,6 +1,18 @@
 [user]
     name = Danil Petrov
     email = danilpetrovvi@gmail.com
+    signingkey = B85FC4EB79CEE9CE
+
+[commit]
+    gpgsign = true
+
+[tag]
+    sort = version:refname
+    forceSignAnnotated = true
+    gpgsign = true
+
+[gpg]
+    program = gpg
 
 [core]
     autocrlf = input
@@ -21,9 +33,6 @@
 
 [pull]
     ff = only
-
-[tag]
-    sort = version:refname
 
 [color "diff"]
     meta = dim
@@ -207,3 +216,6 @@
     ; These are used inside other aliases to avoid repetition.
     default-branch = !basename $(git remote show origin | grep 'HEAD branch:' | cut -d: -f2)
     diverge-commit = !git merge-base $(git default-branch) HEAD
+
+    release-diff = !sh -c 'git diff "$(git describe --abbrev=0)~1.."'
+	release-log = !sh -c 'git -P log "$(git describe --abbrev=0)~1.."'
