@@ -12,11 +12,11 @@ source "{{- .chezmoi.homeDir }}/.functions.zsh"
 # import the private functions
 source-if-exists "{{- .chezmoi.homeDir }}/.functions.private.zsh"
 
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+if [[ -r "${XDG_CACHE_HOME:-{{- .chezmoi.homeDir }}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-{{- .chezmoi.homeDir }}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="{{- .chezmoi.homeDir }}/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(macos git docker kubectl gpg-agent)
 
@@ -49,7 +49,7 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 # Enable iTerm2 shell integration
-source-if-exists "$HOME/.iterm2_shell_integration.zsh"
+source-if-exists "{{- .chezmoi.homeDir }}/.iterm2_shell_integration.zsh"
 
 eval "$(grit shell-integration)"
 
