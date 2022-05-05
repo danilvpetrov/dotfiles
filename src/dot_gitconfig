@@ -34,6 +34,9 @@
 [pull]
     ff = only
 
+[push]
+    default = current
+
 [color "diff"]
     meta = dim
     frag = dim
@@ -151,7 +154,7 @@
     ;   branch is created. You can't use "git branch --set-upstream-to" unless
     ;   the branch already exists, so I just set the upstream unconditionally on
     ;   every push.
-    p  = "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)"
+    p  = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
 
     ; p = push tags
     ;
