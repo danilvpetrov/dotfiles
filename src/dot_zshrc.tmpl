@@ -48,6 +48,9 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 # Enable fast syntax highlighting
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
+# Enable iTerm2 shell integration
+source-if-exists "$HOME/.iterm2_shell_integration.zsh"
+
 eval "$(grit shell-integration)"
 
 # Add all key-chain SSH identities on the login
