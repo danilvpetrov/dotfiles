@@ -222,3 +222,6 @@
 
     release-diff = !sh -c 'git diff "$(git describe --abbrev=0)~1.."'
 	release-log = !sh -c 'git -P log "$(git describe --abbrev=0)~1.."'
+
+    ; tag-md = create a new tag and allow markdown in the commit message.
+    tag-md = tag --annotate --cleanup=whitespace --edit --message ""
