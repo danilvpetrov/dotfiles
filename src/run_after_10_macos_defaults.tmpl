@@ -16,6 +16,10 @@ function plist-set-or-add () {
 # If using iTerm, you must also disable "Allow sessions to survive logging out and back in" in preferences > advanced
 grep -q pam_tid /etc/pam.d/sudo || sudo sed -i.bak $'2i\\\nauth       sufficient     pam_tid.so\n' /etc/pam.d/sudo
 
+# Ignore ARD as the following discussion to fix the sudo with touch ID in the terminal:
+# https://apple.stackexchange.com/questions/411497/pam-tid-so-asks-for-password-instead-of-requesting-for-fingerprint-when-docked
+defaults write com.apple.security.authorization ignoreArd -bool TRUE
+
 # Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
