@@ -35,7 +35,7 @@ DOTFILES_PUBLIC_REPO_SLUG="danilvpetrov/dotfiles"
 
 pushd "$DOTFILES_PUBLIC_PATH" > /dev/null
 if git remote get-url origin | grep "https://" > /dev/null; then
-    echo "Switching dotfiles repo use SSH..."
+    echo "Switching dotfiles repo to use SSH..."
     git remote set-url origin "git@github.com:$DOTFILES_PUBLIC_REPO_SLUG.git"
 fi
 popd > /dev/null
