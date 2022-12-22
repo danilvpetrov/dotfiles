@@ -33,6 +33,8 @@ brew "mycli"
 brew "pgcli"
 brew "clang-format"
 brew "openssl"
+brew "gpg"
+brew "pinentry-mac"
 
 cask "1password-cli1"
 cask "1password"
