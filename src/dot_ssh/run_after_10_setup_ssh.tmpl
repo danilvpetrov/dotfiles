@@ -19,7 +19,7 @@ EOS
 
 echo "Adding SSH passphrase to keychain..."
 # See for the explanation of the command below: https://stackoverflow.com/a/38356798
-DISPLAY= SSH_ASKPASS="$tmpfile" ssh-add -K "$PRIVKEY" < /dev/null
+DISPLAY= SSH_ASKPASS="$tmpfile" ssh-add --apple-use-keychain "$PRIVKEY" < /dev/null
 
 rm "$tmpfile"
 

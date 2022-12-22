@@ -54,7 +54,7 @@ source-if-exists "{{- .chezmoi.homeDir }}/.iterm2_shell_integration.zsh"
 eval "$(grit shell-integration)"
 
 # Add all key-chain SSH identities on the login
-ssh-add -A 2>/dev/null
+ssh-add --apple-load-keychain 2>/dev/null
 
 # add path overrides for homebrew binaries
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
