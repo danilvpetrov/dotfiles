@@ -21,6 +21,6 @@ if [[ $SHLVL = 1 ]]; then
   export GITHUB_TOKEN={{ (onepassword "Github Token").details.password }}
   export HOMEBREW_GITHUB_API_TOKEN={{ (onepassword "Github Token").details.password }}
 
-  # load private environment variables
-  source-if-exists "{{- .chezmoi.homeDir }}/.zshenv.private"
+  # load extra environment variables
+  source-if-exists "{{- .chezmoi.homeDir }}/.zshenv.extra"
 fi
