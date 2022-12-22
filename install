@@ -36,35 +36,39 @@ else
     brew install mas
 fi
 
-if hash op 2>/dev/null; then
+if [[ -d /Applications/1Password.app ]]; then
+    echo "1Password already installed."
+else
+    echo "Installing 1Password..."
+    brew install --cask 1password
+fi
+
+if hash op &>/dev/null; then
     echo "1Password CLI already installed."
 else
     echo "Installing 1Password CLI..."
-    brew install --cask 1password-cli1
+    brew install --cask 1password-cli
 fi
 
-while ! op list vaults --account="my" > /dev/null 2>&1; do
-    # Check if the 1Password account is already known to the CLI, and if so use
-    # the "short form" sign-in syntax. This prevents the need to re-enter the
-    # secret key if it is already known.
-    if [ -f "${HOME}/.config/op/config" ] && cat "${HOME}/.config/op/config" | jq --exit-status '.accounts | .[] | select(.shorthand == "my")' > /dev/null; then
-        eval $(op signin "my")
-    else
-        while [ -z "$OP_EMAIL" ]; do
-            echo -n "1Password email address: "
-            read OP_EMAIL
-        done
+echo "First, add your personal 1Password account to the app, then enable the following options in the preferences:"
+echo
+echo "    - Developer > Command-Line Interface (CLI) > Connect with 1Password CLI"
+echo
 
-        while [ -z "$OP_KEY" ]; do
-            echo -n "1Password secret key: "
-            read OP_KEY
-        done
+open "/Applications/1Password.app"
 
-        eval $(op signin my "$OP_EMAIL" "$OP_KEY")
-    fi
-done
+read -p "Have you configured the specified options? [yn] " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    echo "Unable to continue without configuring 1Password."
+    exit 1
+fi
 
-sudo spctl --add "$(which op)"
+op item get --account=my --vault=Personal "Apple ID" --fields=password | tr -d '\n' | pbcopy
+echo "Sign in to the app store first. Password has been copied to the clipboard."
+mas open
+open "x-apple.systempreferences:com.apple.preferences.AppleIDPrefPane"
 
 DOTFILES_PUBLIC_PATH="$HOME/grit/github.com/danilvpetrov/dotfiles"
 DOTFILES_PUBLIC_REPO="https://danilvpetrov@github.com/danilvpetrov/dotfiles.git"
@@ -88,16 +92,6 @@ if [[ -e "$HOME/dotfiles" ]]; then
 else
     ln -s "$DOTFILES_PUBLIC_PATH" "$HOME/dotfiles"
 fi
-
-#if mas account; then
-#    echo "App store sign in detected."
-#else
-#    op get item "Apple ID" | jq -r '.details.fields[] | select (.designation == "password") | .value' | tr -d '\n' | pbcopy
-#    echo "Sign in to the app store first. Password has been copied to the clipboard."
-#    mas open
-#    open "x-apple.systempreferences:com.apple.preferences.AppleIDPrefPane"
-#    exit 1
-#fi
 
 if [[ -e "$HOME/icloud" ]]; then
     echo "iCloud shortcut directory already exists."

@@ -10,7 +10,7 @@ ulimit -n 8192 # set shell's open file handle limit
 source "{{- .chezmoi.homeDir }}/.functions.zsh"
 
 # import the private functions
-source-if-exists "{{- .chezmoi.homeDir }}/.functions.private.zsh"
+source-if-exists "{{- .chezmoi.homeDir }}/.functions.extra.zsh"
 
 if [[ -r "${XDG_CACHE_HOME:-{{- .chezmoi.homeDir }}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-{{- .chezmoi.homeDir }}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -62,6 +62,9 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
 export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 
+# instructs pinentry app where to prompt for password
+export GPG_TTY=$(tty)
+
 # define aliases
 alias e='code .'
 alias h='hive'
@@ -73,7 +76,6 @@ alias less='less -R'
 alias grep='grep --color'
 
 alias top='top -F -o cpu -O vsize'
-alias mc='EDITOR=code mc'
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias iplocal="ipconfig getifaddr en0"
 alias network.connections='lsof -l -i +L -R -V'

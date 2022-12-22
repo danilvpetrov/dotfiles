@@ -18,8 +18,8 @@ if [[ $SHLVL = 1 ]]; then
   # export less flags
   export LESS="--quit-if-one-screen --hilite-search --hilite-unread --ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --chop-long-lines  --window=-4"
 
-  export GITHUB_TOKEN={{ (onepassword "Github Token").details.password }}
-  export HOMEBREW_GITHUB_API_TOKEN={{ (onepassword "Github Token").details.password }}
+  export GITHUB_TOKEN={{ (onepasswordDetailsFields "Github Token").password.value }}
+  export HOMEBREW_GITHUB_API_TOKEN={{ (onepasswordDetailsFields "Github Token").details.password }}
 
   # load extra environment variables
   source-if-exists "{{- .chezmoi.homeDir }}/.zshenv.extra"

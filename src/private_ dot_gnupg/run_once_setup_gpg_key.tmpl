@@ -20,10 +20,6 @@ fi
 
 echo "Importing GPG key..."
 echo "{{- onepasswordDocument "private.gpg" -}}" | gpg --batch --import
-# TODO:  Replace hardcoded key ID with dynamic output from gpg --list-keys
-echo "6354F15DF814D0761BFC211AB85FC4EB79CEE9CE:6:" | gpg --import-ownertrust
+echo "{{- (onepasswordItemFields "private.gpg").ownertrust.value }}" | gpg --import-ownertrust
 
-
-echo "default-cache-ttl 28800" > "{{- .chezmoi.homeDir }}/.gnupg/gpg-agent.conf"
-echo "pinentry-program $(which pinentry-mac)" >> "{{- .chezmoi.homeDir }}/.gnupg/gpg-agent.conf"
 gpgconf --kill gpg-agent

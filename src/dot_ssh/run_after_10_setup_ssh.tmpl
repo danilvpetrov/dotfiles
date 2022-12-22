@@ -6,7 +6,7 @@ echo "Setting up SSH..."
 
 PRIVKEY="{{- .chezmoi.homeDir }}/.ssh/id_rsa"
 PUBKEY="{{- .chezmoi.homeDir }}/.ssh/id_rsa.pub"
-pwd="{{- (onepassword "id_rsa").details.notesPlain -}}"
+pwd="{{- (onepasswordItemFields "id_rsa").passphrase.value -}}"
 
 tmpfile=$(mktemp)
 chmod +x "$tmpfile"
