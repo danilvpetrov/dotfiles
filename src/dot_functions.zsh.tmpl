@@ -97,3 +97,10 @@ function platformioenv() {
   export PATH="${HOME}/.platformio/penv/bin:${HOME}/.platformio/penv:${HOME}/.platformio/python3/bin:$PATH"
 }
 
+function aria() {
+  aria2c \
+    --summary-interval=0 \
+    --seed-time=0 \
+    --file-allocation=none \
+    "$@"
+}
