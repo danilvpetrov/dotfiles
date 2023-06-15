@@ -55,19 +55,16 @@ function remapkbr_on() {
   <dict>
     <key>Label</key>
     <string>user.keyboard.keyremapping</string>
-    <key>Program</key>
-    <string>/usr/bin/hidutil</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/bin/hidutil</string>
-      <string>property</string>
-      <string>--set</string>
-      <string>{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x700000029}, {"HIDKeyboardModifierMappingSrc":0x7000000e6,"HIDKeyboardModifierMappingDst":0x7000000e4}, {"HIDKeyboardModifierMappingSrc":0x7000000e4,"HIDKeyboardModifierMappingDst":0x7000000e6}]}</string>
+      <string>sh</string>
+      <string>-c</string>
+      <string>hidutil property --set &#39;{&#34;UserKeyMapping&#34;:[{&#34;HIDKeyboardModifierMappingSrc&#34;:0x700000039,&#34;HIDKeyboardModifierMappingDst&#34;:0x700000029}, {&#34;HIDKeyboardModifierMappingSrc&#34;:0x7000000e6,&#34;HIDKeyboardModifierMappingDst&#34;:0x7000000e4}, {&#34;HIDKeyboardModifierMappingSrc&#34;:0x7000000e4,&#34;HIDKeyboardModifierMappingDst&#34;:0x7000000e6}]}&#39;</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
     <key>StandardErrorPath</key>
-    <string>/usr/local/var/log/kbr-remapping.log</string>
+    <string>${HOME}/kbr-remapping-error.log</string>
   </dict>
 </plist>
 
