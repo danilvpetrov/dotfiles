@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
+# Install VSCode extensions
 cat "{{- .chezmoi.sourceDir -}}/private_Library/private_Application Support/Code/User/extensions" | xargs -L 1 code --install-extension
+
+# Install Rosetta
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
