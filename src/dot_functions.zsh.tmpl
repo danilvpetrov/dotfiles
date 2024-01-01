@@ -94,6 +94,15 @@ function platformioenv() {
   export PATH="${HOME}/.platformio/penv/bin:${HOME}/.platformio/penv:${HOME}/.platformio/python3/bin:$PATH"
 }
 
+function platformioproj() {
+  pio project init \
+    --ide "vscode" \
+    --project-option "framework = espidf" \
+    --project-option "platform = espressif32" \
+    --project-option "monitor_speed = 115200" \
+    "$@"
+}
+
 function aria() {
   aria2c \
     --summary-interval=0 \
