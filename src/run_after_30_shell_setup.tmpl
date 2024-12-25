@@ -43,8 +43,8 @@ fi
 # Set up Touch ID for terminal authorizations
 
 # Create sudo_local from template
-cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
+sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
 # Backup sudo_local then remove '#' at line 3
-sed -i '.bak' '3s/#//' "/etc/pam.d/sudo_local"
+sudo sed -i '.bak' '3s/#//' "/etc/pam.d/sudo_local"
 
 {{- end }}
