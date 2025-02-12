@@ -8,4 +8,6 @@
 Desktop.ini
 Thumbs.db
 debug.test
+.envrc
+.env
 .vscode
