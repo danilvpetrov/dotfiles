@@ -32,6 +32,7 @@ brew "clang-format"
 brew "openssl"
 brew "gpg"
 brew "pinentry-mac"
+brew "font-jetbrains-mono-nerd-font"
 
 cask "slack"
 cask "tunnelblick"
