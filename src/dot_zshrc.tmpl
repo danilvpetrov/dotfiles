@@ -63,11 +63,5 @@ alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias iplocal="ipconfig getifaddr en0"
 alias network.connections='lsof -l -i +L -R -V'
 alias network.established='lsof -l -i +L -R -V | grep ESTABLISHED'
-
-{{- if eq .chezmoi.os "darwin" }}
-alias ls='ls -lhG'
-alias la='ls -lhGa'
-{{- else }}
 alias ls='ls -lh --color --group-directories-first'
 alias la='ls -lha --color --group-directories-first'
-{{- end }}
