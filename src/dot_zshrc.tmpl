@@ -12,46 +12,28 @@ source "{{- .chezmoi.homeDir }}/.functions.zsh"
 # import the private functions
 source-if-exists "{{- .chezmoi.homeDir }}/.functions.extra.zsh"
 
-if [[ -r "${XDG_CACHE_HOME:-{{- .chezmoi.homeDir }}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-{{- .chezmoi.homeDir }}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-export ZSH="{{- .chezmoi.homeDir }}/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(macos git docker kubectl gpg-agent direnv)
-
-source $ZSH/oh-my-zsh.sh
-
 # User configuration
 export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # Enable autosuggestions
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Fix slowness of pastes with zsh-syntax-highlighting.zsh
-pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
-}
-pastefinish() {
-  zle -N self-insert $OLD_SELF_INSERT
-}
-zstyle :bracketed-paste-magic paste-init pasteinit
-zstyle :bracketed-paste-magic paste-finish pastefinish
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#757575'
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # Enable fast syntax highlighting
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
-# Enable iTerm2 shell integration
-source-if-exists "{{- .chezmoi.homeDir }}/.iterm2_shell_integration.zsh"
+# Remove certain characters from WORDCHARS
+WORDCHARS=${WORDCHARS//[&.;=\/]}
+
+source "/opt/homebrew/opt/spaceship/spaceship.zsh"
+SPACESHIP_PROMPT_SEPARATE_LINE=false
 
 eval "$(grit shell-integration)"
+eval "$(direnv hook zsh)"
 
 # Add all key-chain SSH identities on the login
 ssh-add --apple-load-keychain 2>/dev/null
@@ -62,13 +44,13 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
 export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
 
 # instructs pinentry app where to prompt for password
 export GPG_TTY=$(tty)
 
 # define aliases
 alias e='code .'
-alias h='hive'
 alias d='docker'
 alias m='make'
 alias g='git'

@@ -19,7 +19,7 @@ else
 fi
 
 echo "Importing GPG key..."
-echo "{{- onepasswordDocument "private.gpg" -}}" | gpg --batch --import
-echo "{{- (onepasswordItemFields "private.gpg").ownertrust.value }}" | gpg --import-ownertrust
+echo "{{ output "cat" "../../../../icloud/Configurations/gpg/private.gpg" | trim}}" | gpg --batch --import
+echo "{{ output "cat" "../../../../icloud/Configurations/gpg/ownertrust" | trim}}" | gpg --import-ownertrust
 
 gpgconf --kill gpg-agent

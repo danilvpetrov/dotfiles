@@ -6,7 +6,7 @@ echo "Setting up SSH..."
 
 PRIVKEY="{{- .chezmoi.homeDir }}/.ssh/id_rsa"
 PUBKEY="{{- .chezmoi.homeDir }}/.ssh/id_rsa.pub"
-pwd="{{- (onepasswordItemFields "id_rsa").passphrase.value -}}"
+pwd="{{ output "cat" "../../../../icloud/Configurations/ssh/passphrase" | trim}}"
 
 tmpfile=$(mktemp)
 chmod +x "$tmpfile"
