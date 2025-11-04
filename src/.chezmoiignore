@@ -1,6 +1,2 @@
-{{- if eq .chezmoi.os "darwin" }}
 Brewfile
-{{- end }}
-{{ if not (eq .chezmoi.os "darwin") -}}
 Library/
-{{ end -}}

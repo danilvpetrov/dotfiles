@@ -19,26 +19,34 @@
     autocrlf = input
     excludesfile = ~/.gitignore.global
     whitespace = trailing-space,space-before-tab,tabwidth=4
+    editor = code --wait
 
 [init]
     defaultBranch = main
+
+[branch]
+	sort = -committerdate
 
 [diff]
     renames = copies
     renameLimit = 2000
 
 [fetch]
-    prune = true
+	prune = true
+	pruneTags = true
+	all = true
 
 [help]
     autocorrect = 10
 
 [pull]
     ff = only
+    rebase = true
 
 [push]
     default = current
     autoSetupRemote = true
+    followTags = true
 
 [stash]
     showIncludeUntracked = true
@@ -61,9 +69,6 @@
 
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
-
-[init]
-	defaultBranch = main
 
 [alias]
     ; --------------------------------------------------------------------------
@@ -160,12 +165,7 @@
     ;   Pushes and sets the upstream to a branch with the same name. I use this
     ;   universally for new and existing branches as I almost never push to a
     ;   remote branch with a different name.
-    ;
-    ;   I haven't yet been able to find a simple way to do this once when a new
-    ;   branch is created. You can't use "git branch --set-upstream-to" unless
-    ;   the branch already exists, so I just set the upstream unconditionally on
-    ;   every push.
-    p  = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+    p = push
 
     ; p = push tags
     ;
