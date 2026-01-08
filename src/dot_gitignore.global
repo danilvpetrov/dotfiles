@@ -9,5 +9,6 @@ Desktop.ini
 Thumbs.db
 debug.test
 .envrc
-.env
+.env.local
+.env.*.local
 .vscode
