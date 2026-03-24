@@ -2,6 +2,13 @@ autoload -Uz compinit && compinit
 autoload -Uz bashcompinit && bashcompinit
 
 setopt clobber # allow output redirection to clobber existing files
+setopt APPEND_HISTORY      # Append history to the history file (don't overwrite)
+setopt SHARE_HISTORY       # Share history between all open sessions
+setopt INC_APPEND_HISTORY  # Save history lines as soon as they are entered
+setopt EXTENDED_HISTORY    # Record command timestamps along with the command itself
+setopt HIST_IGNORE_DUPS    # Don't record an entry that was just recorded again
+setopt HIST_FIND_NO_DUPS   # Do not display a previously found duplicate entry again
+
 unsetopt autocd
 unsetopt correct
 ulimit -n 8192 # set shell's open file handle limit
@@ -17,6 +24,11 @@ export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
+
+# Set Zsh history file location and size
+export HISTFILE="${HOME}/.zsh_history"
+export HISTSIZE=10000
+export SAVEHIST=10000
 
 # Enable autosuggestions
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
