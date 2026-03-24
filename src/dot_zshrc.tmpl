@@ -16,21 +16,28 @@ source-if-exists "{{- .chezmoi.homeDir }}/.functions.extra.zsh"
 export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Enable autosuggestions
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#757575'
-export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+export ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(expand-or-complete)
 
 # Enable fast syntax highlighting
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
+# Enable autocomplete
+source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 # Remove certain characters from WORDCHARS
 WORDCHARS=${WORDCHARS//[&.;=\/]}
 
-source "/opt/homebrew/opt/spaceship/spaceship.zsh"
-SPACESHIP_PROMPT_SEPARATE_LINE=false
+# Enable powerlevel10k instant prompt.
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 eval "$(grit shell-integration)"
 eval "$(direnv hook zsh)"
@@ -65,3 +72,4 @@ alias network.connections='lsof -l -i +L -R -V'
 alias network.established='lsof -l -i +L -R -V | grep ESTABLISHED'
 alias ls='ls -lh --color --group-directories-first'
 alias la='ls -lha --color --group-directories-first'
+
