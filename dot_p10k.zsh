@@ -31,6 +31,7 @@
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # os_icon               # os identifier
+    shlvl                   # nested shell level (only when SHLVL > 1)
     dir                     # current directory
     vcs                     # git status
     prompt_char             # prompt symbol
@@ -1637,6 +1638,13 @@
   typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION=
   # Custom prefix.
   # typeset -g POWERLEVEL9K_TIME_PREFIX='%fat '
+
+  # Show nested shell level (SHLVL) only when greater than 1.
+  function prompt_shlvl() {
+    (( SHLVL > 1 )) || return
+    p10k segment -f 208 -i '⧉' -t "$SHLVL"
+  }
+  function instant_prompt_shlvl() { prompt_shlvl }
 
   # Example of a user-defined prompt segment. Function prompt_example will be called on every
   # prompt if `example` prompt segment is added to POWERLEVEL9K_LEFT_PROMPT_ELEMENTS or
