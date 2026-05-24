@@ -20,6 +20,10 @@
     excludesfile = ~/.gitignore.global
     whitespace = trailing-space,space-before-tab,tabwidth=4
     editor = code --wait
+    pager = diff-so-fancy | less --tabs=4 -RFX
+
+[interactive]
+    diffFilter = diff-so-fancy --patch
 
 [init]
     defaultBranch = main
