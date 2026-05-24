@@ -9,4 +9,4 @@ netcorext.uuid-generator
 platformio.platformio-ide
 dnut.rewrap-revived
 wmaurer.change-case
-zxh404.vscode-proto3
+drblury.protobuf-vsc
